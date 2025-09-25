@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  helloapi:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.hello
+    container_name: helloapi
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+    ports:
+      - "5050:8080"   # puerto estable en host
+    networks:
+      - appnet
+
+  timeapi:
+    build:
+      context: .
+    # si tu Dockerfile de TimeApi se llama Dockerfile.time:
+      dockerfile: ./Dockerfile.time
+    container_name: timeapi
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - HELLO_URL=http://helloapi:8080
+    depends_on:
+      - helloapi
+    ports:
+      - "5052:8080"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
