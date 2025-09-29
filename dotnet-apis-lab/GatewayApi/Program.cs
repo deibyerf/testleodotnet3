@@ -30,4 +30,9 @@ app.MapGet("/status", async () =>
     return Results.Ok(new { gateway = Environment.MachineName, hello, time });
 });
 
+app.MapGet("/prog", async () =>
+{    
+       return Results.Ok( "deiby GH" );
+});
+
 app.Run();

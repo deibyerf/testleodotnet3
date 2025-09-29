@@ -24,7 +24,19 @@ services:
     networks:
       - appnet
 
-  
+  gatewayapi:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.gateway
+    container_name: gatewayapi
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - HELLO_URLS=http://helloapi:8080
+      - TIME_URLS=http://timeapi:8080
+    ports:
+      - "5055:8080"
+    networks:
+      - appnet  
 
 networks:
   appnet:
